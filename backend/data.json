@@ -1,0 +1,48 @@
+{
+  "last_period": "2026-03-31",
+  "cycle_length": 26,
+  "last_met": "2026-04-03",
+  "last_special": "2026-02-20",
+  "met_history": [
+    "2026-04-03"
+  ],
+  "special_history": [
+    "2026-02-20"
+  ],
+  "food_history": [
+    [
+      "sada dosa",
+      "pani puri"
+    ],
+    [
+      "omlette paav",
+      "manchurian bhel"
+    ],
+    [
+      "chicken momos",
+      "manchurian rice"
+    ],
+    [
+      "viatnamesse coffee",
+      "iced vanilla matcha",
+      "nachos"
+    ]
+  ],
+  "llm_cache": {
+    "period": {
+      "date": "2026-04-21",
+      "data": {
+        "for_her": "Time to embrace your inner queen, period vibes are brewing!",
+        "for_him": "Stock up on chocolate and comfy blankets, it's survival time."
+      }
+    },
+    "last_special": {
+      "date": "2026-04-21",
+      "data": "Aaryan and Akshada ki romance file mein 60 din se 'missing' stamp laga hai, koi dekha kya?"
+    },
+    "last_met": {
+      "date": "2026-04-21",
+      "data": "Arre, eighteen days... itna lamba intezaar, desh mein sabhi dil bechain hain!"
+    }
+  }
+}
