@@ -2,7 +2,7 @@
  * API client for the couple's website backend.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api';
 
 async function fetchJSON(url, options = {}) {
   try {
