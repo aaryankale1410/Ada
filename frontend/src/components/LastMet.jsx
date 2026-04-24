@@ -124,7 +124,7 @@ export default function LastMet() {
         {/* LLM Comment */}
         {data.llm_comment && (
           <div className="llm-bubble">
-            <div className="llm-label">🎬 Bollywood Narrator Says</div>
+            <div className="llm-label">💝</div>
             {data.llm_comment}
           </div>
         )}
