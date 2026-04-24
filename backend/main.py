@@ -145,6 +145,36 @@ async def add_food(food_input: FoodInput):
     return {"history": updated}
 
 
+# ─── PLACES WISHLIST ───
+
+class PlaceInput(BaseModel):
+    place: str
+    notes: str = ""
+
+class PlaceIdInput(BaseModel):
+    id: int
+
+
+@app.get("/api/places")
+async def get_places():
+    return data.get_places()
+
+
+@app.post("/api/places/add")
+async def add_place(place_input: PlaceInput):
+    return data.add_place(place_input.place, place_input.notes)
+
+
+@app.post("/api/places/complete")
+async def complete_place(place_id_input: PlaceIdInput):
+    return data.complete_place(place_id_input.id)
+
+
+@app.post("/api/places/delete")
+async def delete_place(place_id_input: PlaceIdInput):
+    return data.delete_place(place_id_input.id)
+
+
 if __name__ == "__main__":
     import uvicorn
     import os
