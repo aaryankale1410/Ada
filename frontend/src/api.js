@@ -42,3 +42,18 @@ export const addFood = (items) => fetchJSON('/food/add', {
   method: 'POST',
   body: JSON.stringify({ items }),
 });
+
+// Places Wishlist
+export const getPlaces = () => fetchJSON('/places');
+export const addPlace = (place, notes) => fetchJSON('/places/add', {
+  method: 'POST',
+  body: JSON.stringify({ place, notes }),
+});
+export const completePlace = (id) => fetchJSON('/places/complete', {
+  method: 'POST',
+  body: JSON.stringify({ id }),
+});
+export const deletePlace = (id) => fetchJSON('/places/delete', {
+  method: 'POST',
+  body: JSON.stringify({ id }),
+});
