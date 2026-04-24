@@ -30,7 +30,7 @@ async def open_when_sad() -> str:
     return await generate(
         "You are writing a short, heartfelt message for someone's girlfriend who is feeling sad. "
         "Write ONE sentence that is funny, sweet, comforting, and makes her feel loved and safe. "
-        "It should feel like a warm hug in words and it should be funny. Use simple English. "
+        "It should feel like a warm hug in words and it should be funny and it should make her giggle. Use simple English. "
         "Don't use quotes. Don't label it. Just the message. Keep it under 20 words. "
         "Be genuine, not cheesy. Make it feel personal, like her boyfriend Aaryan wrote it for Akshada."
     )
@@ -40,7 +40,7 @@ async def open_when_miss_me() -> str:
     return await generate(
         "You are writing a short, funny, sweet message for someone's girlfriend who is missing her boyfriend. "
         "Write ONE sentence that is funny, comforting, romantic, and reassuring. "
-        "It should make her smile through the longing. Use simple English. "
+        "It should make her giggle through the longing. It should be funny. Use simple English. "
         "Don't use quotes. Don't label it. Just the message. Keep it under 20 words. "
         "Make it feel like Aaryan is right there with Akshada even when apart."
     )
