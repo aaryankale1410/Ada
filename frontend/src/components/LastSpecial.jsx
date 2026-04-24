@@ -131,7 +131,7 @@ export default function LastSpecial() {
             background: 'linear-gradient(135deg, rgba(195, 174, 214, 0.1), rgba(122, 91, 160, 0.08))',
             borderColor: 'rgba(195, 174, 214, 0.2)',
           }}>
-            <div className="llm-label" style={{ color: 'var(--lavender-light)' }}>😏 Your Cheeky Friend Says</div>
+            <div className="llm-label" style={{ color: 'var(--lavender-light)' }}>😏</div>
             {data.llm_comment}
           </div>
         )}
