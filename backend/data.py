@@ -41,6 +41,55 @@ def clear_cached_llm(key: str) -> None:
     if not supabase: return
     supabase.table('llm_cache').delete().eq("category", key).execute()
 
+def analyze_history(dates_list, label: str) -> dict:
+    if not dates_list:
+        return {
+            "total_count": 0, "label": label, "this_month": 0, "last_month": 0, 
+            "avg_gap_days": 0, "longest_streak": 0, "favorite_day": "None",
+            "monthly_breakdown": {}, "all_dates": []
+        }
+        
+    parsed_dates = sorted([datetime.strptime(d, "%Y-%m-%d").date() for d in dates_list])
+    today = date.today()
+    
+    this_month_count = sum(1 for d in parsed_dates if d.year == today.year and d.month == today.month)
+    
+    last_month_y = today.year if today.month > 1 else today.year - 1
+    last_month_m = today.month - 1 if today.month > 1 else 12
+    last_month_count = sum(1 for d in parsed_dates if d.year == last_month_y and d.month == last_month_m)
+    
+    gaps = [(parsed_dates[i] - parsed_dates[i-1]).days for i in range(1, len(parsed_dates))]
+    avg_gap = round(sum(gaps) / len(gaps)) if gaps else 0
+    
+    longest_streak = 1 if parsed_dates else 0
+    current_streak = 1
+    for i in range(1, len(parsed_dates)):
+        if (parsed_dates[i] - parsed_dates[i-1]).days == 1:
+            current_streak += 1
+            longest_streak = max(longest_streak, current_streak)
+        else:
+            current_streak = 1
+
+    from collections import Counter
+    days = [d.strftime("%A") for d in parsed_dates]
+    fav_day = Counter(days).most_common(1)[0][0] if days else "None"
+    
+    breakdown = {}
+    for d in parsed_dates:
+        m_str = d.strftime("%Y-%m")
+        breakdown[m_str] = breakdown.get(m_str, 0) + 1
+        
+    return {
+        "total_count": len(parsed_dates),
+        "label": label,
+        "this_month": this_month_count,
+        "last_month": last_month_count,
+        "avg_gap_days": avg_gap,
+        "longest_streak": longest_streak,
+        "favorite_day": fav_day,
+        "monthly_breakdown": breakdown,
+        "all_dates": [d.isoformat() for d in sorted(parsed_dates, reverse=True)]
+    }
 
 # --- Period ---
 
@@ -93,7 +142,17 @@ def update_last_met() -> dict:
     if supabase:
         today_str = date.today().isoformat()
         supabase.table('dates').update({"last_met": today_str}).eq("id", 1).execute()
+        try:
+            supabase.table('met_history').insert({"met_date": today_str}).execute()
+        except Exception:
+            pass # Ignore duplicate inserts for the same day
     return get_last_met()
+
+def get_met_insights() -> dict:
+    if not supabase: return analyze_history([], "Times Met")
+    response = supabase.table('met_history').select("met_date").execute()
+    dates = [row["met_date"] for row in response.data]
+    return analyze_history(dates, "Times Met")
 
 
 # --- Last Special ---
@@ -116,7 +175,17 @@ def update_last_special() -> dict:
     if supabase:
         today_str = date.today().isoformat()
         supabase.table('dates').update({"last_special": today_str}).eq("id", 1).execute()
+        try:
+            supabase.table('special_history').insert({"special_date": today_str}).execute()
+        except Exception:
+            pass
     return get_last_special()
+
+def get_special_insights() -> dict:
+    if not supabase: return analyze_history([], "Special Nights")
+    response = supabase.table('special_history').select("special_date").execute()
+    dates = [row["special_date"] for row in response.data]
+    return analyze_history(dates, "Special Nights")
 
 
 # --- Food ---
