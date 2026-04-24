@@ -62,13 +62,13 @@ export default function App() {
 
         <div className="section-divider" />
 
-        {/* Food Suggester */}
-        <FoodSuggester />
+        {/* Places Wishlist */}
+        <PlacesWishlist />
 
         <div className="section-divider" />
 
-        {/* Places Wishlist */}
-        <PlacesWishlist />
+        {/* Food Suggester */}
+        <FoodSuggester />
 
         {/* Footer */}
         <footer className="footer">
