@@ -202,3 +202,110 @@ def add_food(items: list[str]) -> list:
     if supabase:
         supabase.table('food_history').insert({"items": items}).execute()
     return get_food_history()
+
+
+# --- Places Wishlist ---
+
+def get_places() -> dict:
+    """Get active wishlist places and completed history."""
+    if not supabase:
+        return {"wishlist": [], "history": [], "analytics": _empty_places_analytics()}
+
+    # Active (not completed)
+    active = supabase.table('places_wishlist') \
+        .select("*") \
+        .eq("completed", False) \
+        .order("created_at", desc=True) \
+        .execute()
+
+    # Completed
+    completed = supabase.table('places_wishlist') \
+        .select("*") \
+        .eq("completed", True) \
+        .order("completed_at", desc=True) \
+        .execute()
+
+    wishlist = [{
+        "id": r["id"],
+        "place": r["place"],
+        "notes": r.get("notes", ""),
+        "created_at": r["created_at"],
+    } for r in active.data]
+
+    history = [{
+        "id": r["id"],
+        "place": r["place"],
+        "notes": r.get("notes", ""),
+        "completed_at": r.get("completed_at", ""),
+    } for r in completed.data]
+
+    analytics = _compute_places_analytics(completed.data)
+
+    return {"wishlist": wishlist, "history": history, "analytics": analytics}
+
+
+def add_place(place: str, notes: str = "") -> dict:
+    if supabase:
+        supabase.table('places_wishlist').insert({
+            "place": place,
+            "notes": notes,
+            "completed": False,
+        }).execute()
+    return get_places()
+
+
+def complete_place(place_id: int) -> dict:
+    if supabase:
+        supabase.table('places_wishlist').update({
+            "completed": True,
+            "completed_at": datetime.now().isoformat(),
+        }).eq("id", place_id).execute()
+    return get_places()
+
+
+def delete_place(place_id: int) -> dict:
+    if supabase:
+        supabase.table('places_wishlist').delete().eq("id", place_id).execute()
+    return get_places()
+
+
+def _empty_places_analytics() -> dict:
+    return {
+        "total_visited": 0,
+        "total_pending": 0,
+        "this_month": 0,
+        "monthly_breakdown": {},
+    }
+
+
+def _compute_places_analytics(completed_rows: list) -> dict:
+    today = date.today()
+    total = len(completed_rows)
+
+    this_month = 0
+    breakdown = {}
+
+    for r in completed_rows:
+        completed_at = r.get("completed_at")
+        if not completed_at:
+            continue
+        try:
+            d = datetime.fromisoformat(completed_at).date()
+        except (ValueError, TypeError):
+            continue
+
+        if d.year == today.year and d.month == today.month:
+            this_month += 1
+
+        m_key = d.strftime("%Y-%m")
+        breakdown[m_key] = breakdown.get(m_key, 0) + 1
+
+    # Sort breakdown chronologically
+    breakdown = dict(sorted(breakdown.items()))
+
+    return {
+        "total_visited": total,
+        "total_pending": 0,  # filled by get_places caller
+        "this_month": this_month,
+        "monthly_breakdown": breakdown,
+    }
