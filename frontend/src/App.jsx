@@ -8,6 +8,7 @@ import PeriodTracker from './components/PeriodTracker';
 import LastMet from './components/LastMet';
 import LastSpecial from './components/LastSpecial';
 import FoodSuggester from './components/FoodSuggester';
+import PlacesWishlist from './components/PlacesWishlist';
 
 export default function App() {
   const [accessGranted, setAccessGranted] = useState(false);
@@ -63,6 +64,11 @@ export default function App() {
 
         {/* Food Suggester */}
         <FoodSuggester />
+
+        <div className="section-divider" />
+
+        {/* Places Wishlist */}
+        <PlacesWishlist />
 
         {/* Footer */}
         <footer className="footer">
