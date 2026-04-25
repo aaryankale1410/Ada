@@ -1,0 +1,22 @@
+{
+  "name": "Aaryan & Akshada",
+  "short_name": "Us",
+  "description": "Our special place",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#07060e",
+  "background_color": "#07060e",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
