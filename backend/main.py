@@ -16,8 +16,11 @@ import llm
 app = FastAPI(title="Aaryan & Akshada API", version="1.0.0")
 
 import os
-
 frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
+@app.get("/")
+async def ping():
+    return {"status": "awake", "message": "Render is alive!"}
 
 # CORS — allow frontend dev server and production Vercel
 app.add_middleware(
