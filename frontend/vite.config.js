@@ -7,11 +7,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg'],
+      includeAssets: ['icon-192.png', 'icon-512.png'],
       manifest: {
         name: 'Aaryan & Akshada',
         short_name: 'Us',
         description: 'Our special place',
+        start_url: '/',
+        scope: '/',
         theme_color: '#07060e',
         background_color: '#07060e',
         display: 'standalone',
