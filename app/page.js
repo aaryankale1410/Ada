@@ -9,7 +9,6 @@ import OpenWhen from '@/components/OpenWhen';
 import PeriodTracker from '@/components/PeriodTracker';
 import LastMet from '@/components/LastMet';
 import LastSpecial from '@/components/LastSpecial';
-import FoodSuggester from '@/components/FoodSuggester';
 import PlacesWishlist from '@/components/PlacesWishlist';
 
 export default function HomePage() {
@@ -49,8 +48,6 @@ export default function HomePage() {
         <LastSpecial />
         <div className="section-divider" />
         <PlacesWishlist />
-        <div className="section-divider" />
-        <FoodSuggester />
 
         <footer className="footer">
           <div className="footer-heart">💕</div>
