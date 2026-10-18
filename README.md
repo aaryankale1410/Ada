@@ -33,7 +33,7 @@ A unified Next.js web application co-locating the interactive React frontend and
    ```env
    GEMINI_API_KEY=your_gemini_api_key
    SUPABASE_KEY=your_supabase_anon_key
-   SUPABASE_URL=https://ewskkmvnkwffunxecehj.supabase.co
+   SUPABASE_URL=your_supabase_url
    ```
 
 3. Start the dev server:
