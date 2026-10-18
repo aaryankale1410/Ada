@@ -1,4 +1,4 @@
-# Aaryan & Akshada 💕
+# Eclipse
 
 A unified Next.js web application co-locating the interactive React frontend and API route handlers (with Supabase and Google Gemini AI integration), deployed effortlessly to **Vercel** with zero Python and zero Render dependencies.
 
